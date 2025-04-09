@@ -1,16 +1,18 @@
+
 export interface ModalProps {
   data: {
     type: 'create' | 'edit';
-    date?: string;
+    date: { start: string; end: string } | string;
     event?: {
       id: number;
       title: string;
       start: string;
-      end?: string;
+      end: string;
+      customerId: number;
     };
   };
   onClose: () => void;
-  onSave: (eventData: { id: number; title: string; date: string; endDate: string }) => void;
+  onSave: (event: any) => void;
   onDelete?: (id: number) => void;
-  children?: React.ReactNode;
 }
+

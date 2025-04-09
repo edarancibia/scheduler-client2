@@ -18,12 +18,12 @@ const Calendar: React.FC<CalendarProps> = ({ events, onDateClick, onEventClick, 
         right: "dayGridMonth,timeGridWeek,timeGridDay",
       }}
       businessHours={{
-        daysOfWeek: [1, 2, 3, 4, 5],
+        daysOfWeek: [1, 2, 3, 4, 5, 6],
         startTime: "08:00",
         endTime: "20:00",
       }}
       selectConstraint={{
-        daysOfWeek: [1, 2, 3, 4, 5],
+        daysOfWeek: [1, 2, 3, 4, 5, 6],
         startTime: "08:00",
         endTime: "20:00",
       }}
@@ -42,6 +42,15 @@ const Calendar: React.FC<CalendarProps> = ({ events, onDateClick, onEventClick, 
       select={(info) => onSlotClick({ startStr: info.startStr, endStr: info.endStr })}
       dateClick={(info) => onDateClick(new Date(info.date))}
       eventClick={(info) => onEventClick(info.event)}
+      height="auto"
+  views={{
+    timeGridWeek: {
+      slotMinHeight: 20, // Ajusta el tamaño de los slots para hacer "zoom out"
+    },
+    timeGridDay: {
+      slotMinHeight: 20, // También para la vista de día
+    }
+  }}
     />
   );
 };

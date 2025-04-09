@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { ModalData } from "../types/modalData.type";
 import Calendar from "./Calendar";
 import Modal from "./Modal";
+import { useNavigate } from "react-router-dom";
+import { LogOut } from "lucide-react";
 
 const CalendarPage = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -12,22 +14,48 @@ const CalendarPage = () => {
     end: string;
   } | null>(null);
 
+  const navigate = useNavigate();
+
+  const fetchEvents = async () => {
+    try {
+      const businessId = localStorage.getItem("businessId");
+      const token = localStorage.getItem('token');
+
+      if (!businessId) return;
+
+      const response = await fetch(`http://localhost:3000/appointments/${businessId}`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      });
+
+      const data = await response.json();
+
+      const transformed = data.map((event: any) => ({
+        id: event.id,
+        title: `${event.customer.name} ${event.customer.lastname}`,
+        start: event.date,
+        end: event.dateEnd,
+        status: event.status,
+        customer: event.customer,
+      }));
+
+      setEvents(transformed);
+    } catch (error) {
+      console.log("error al obtener eventos");
+      navigate("/");
+    }
+  };
+
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/appointments/5/2");
-        const data = await response.json();
-
-        console.log(data);
-
-        setEvents(data);
-      } catch (error) {
-        console.log("error al  obtener eventos");
-      }
-    };
-
     fetchEvents();
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
 
   const handleSlotClick = (selection: { startStr: string; endStr: string }) => {
     setSelectedTime({
@@ -42,49 +70,53 @@ const CalendarPage = () => {
     setIsModalOpen(true);
   };
 
-  const handleSave = async (eventData: { id: number; title: string; date: string; endDate: string }) => {
+  const handleSave = async (eventData: {
+    id: number;
+    title: string;
+    date: string;
+    endDate: string;
+    customerId: number;
+  }) => {
     try {
+      const businessId = localStorage.getItem('businessId');
+      const customerId = eventData.customerId;
+
       const response = await fetch("http://localhost:3000/appointments", {
         method: "POST",
         headers: {
+          "Authorization": `Bearer ${localStorage.getItem('token')}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          title: eventData.title,
-          start: eventData.date,
-          end: eventData.endDate,
+          service: eventData.title,
+          businessId: Number(businessId),
+          customerId: Number(customerId),
+          date: eventData.date,
+          dateEnd: eventData.endDate,
+          statusId: 1,
         }),
       });
-  
+
       if (!response.ok) {
         throw new Error("Error al guardar el evento");
       }
-  
-      const newEvent = await response.json();
-  
-      // Actualizar el estado con el nuevo evento
-      setEvents((prevEvents) => [...prevEvents, newEvent]);
-  
-      // Cerrar el modal
+
       setIsModalOpen(false);
       setModalData(null);
+      fetchEvents();
     } catch (error) {
       console.error("Error al guardar el evento:", error);
     }
   };
 
-  // const handleEventClick = (event: Event) => {
-  //   setModalData({ event, type: 'edit' });
-  //   setIsModalOpen(true);
-  // };
-
   const handleModalClose = () => {
     setIsModalOpen(false);
     setModalData(null);
+    fetchEvents();
   };
 
   return (
-    <div className="calendar-page">
+    <div className="calendar-page relative mr-10 ml-10">
       <Calendar
         events={events}
         onDateClick={handleDateClick}
@@ -92,37 +124,17 @@ const CalendarPage = () => {
         onSlotClick={handleSlotClick}
       />
       {isModalOpen && selectedTime && (
-      <Modal
-        data={{ type: "create", date: selectedTime?.start }}
-        onClose={handleModalClose}
-        onSave={handleSave}
-      >
-        <h2 className="text-xl font-bold mb-4">Crear Evento</h2>
-        <div className="mb-2">
-          <label className="block text-gray-600">Hora de Inicio</label>
-          <input
-            type="text"
-            value={selectedTime?.start || ""}
-            readOnly
-            className="w-full p-2 border rounded"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-600">Hora de Fin</label>
-          <input
-            type="text"
-            value={selectedTime?.end || ""}
-            readOnly
-            className="w-full p-2 border rounded"
-          />
-        </div>
-        <button
-          onClick={handleModalClose}
-          className="bg-red-500 text-white p-2 rounded"
-        >
-          Cerrar
-        </button>
-      </Modal>
+        <Modal
+          data={{
+            type: "create",
+            date: {
+              start: selectedTime.start,
+              end: selectedTime.end,
+            },
+          }}
+          onClose={handleModalClose}
+          onSave={handleSave}
+        />
       )}
     </div>
   );

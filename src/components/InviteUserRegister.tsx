@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "./Card";
 import Button from "./Button";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const UserRegister = () => {
+const InviteUserRegister = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -19,6 +20,21 @@ const UserRegister = () => {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [businessName, setBusinessName] = useState('');
+  const [businessId, setBusinessId] = useState('');
+
+  useEffect(() => {
+    const fetchBusinessName = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/business/${1}`);
+        setBusinessName(res.data.name);
+      } catch (error) {
+        setBusinessName("No disponible");
+      }
+    };
+  
+    fetchBusinessName();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -54,11 +70,10 @@ const UserRegister = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, lastname, email, password, phone, role: 1 }),
+        body: JSON.stringify({ name, lastname, email, password, phone, role: 2 }),
       });
 
-      const responseData = await response.json(); 
-      localStorage.setItem('userId', responseData.id)
+      //TODO: save businessid in user
 
       if (!response.ok) {
         throw new Error("Error en el registro. Inténtalo de nuevo.");
@@ -67,7 +82,7 @@ const UserRegister = () => {
       setShowSuccess(true);
       setTimeout(() => {
         setShowSuccess(false);
-        navigate("/business");
+        navigate("/");
       }, 3000);
 
       setFormData({
@@ -91,7 +106,7 @@ const UserRegister = () => {
     <div className="flex flex-col justify-center items-center h-screen bg-gray-100">
       {showSuccess && (
         <div className="fixed top-4 w-11/12 max-w-md bg-green-600 text-white text-center py-2 px-4 rounded-lg shadow-md">
-          Registro exitoso! Redirigiendo a creación de tu negocio...
+          Registro exitoso! Redirigiendo...
         </div>
       )}
 
@@ -117,6 +132,13 @@ const UserRegister = () => {
         <h1 className="text-2xl font-bold text-center mb-4">Registro de Usuario</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid gap-4">
+          <input
+              type="text"
+              name="business"
+              value={businessName}
+              className="w-full p-2 border rounded"
+              readOnly
+            />
             <input
               type="text"
               name="name"
@@ -199,4 +221,4 @@ const UserRegister = () => {
   );
 };
 
-export default UserRegister;
+export default InviteUserRegister;
