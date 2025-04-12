@@ -23,7 +23,6 @@ const CreateCustomerModal: React.FC<CreateCustomerModalProps> = ({
   });
 
   const handleSaveCustomer = async () => {
-    console.log("Guardando cliente:", customerData);
     try {
       const response = await fetch("http://localhost:3000/customers", {
         method: "POST",
@@ -51,14 +50,6 @@ const CreateCustomerModal: React.FC<CreateCustomerModalProps> = ({
     const { name, value } = e.target;
     setCustomerData({ ...customerData, [name]: value });
   };
-
-//   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-//     console.log('click')
-//     console.log(customerData)
-//     //onSave(customerData);
-//     //onClose();
-//   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">

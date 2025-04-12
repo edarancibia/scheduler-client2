@@ -2,11 +2,16 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import esLocale from "@fullcalendar/core/locales/es"; 
+import esLocale from "@fullcalendar/core/locales/es";
 import { CalendarProps } from "../types/CalendarProps.type";
 import React from "react";
 
-const Calendar: React.FC<CalendarProps> = ({ events, onDateClick, onEventClick, onSlotClick }) => {
+const Calendar: React.FC<CalendarProps> = ({
+  events,
+  onDateClick,
+  onEventClick,
+  onSlotClick,
+}) => {
   return (
     <FullCalendar
       plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -39,18 +44,20 @@ const Calendar: React.FC<CalendarProps> = ({ events, onDateClick, onEventClick, 
       expandRows={true}
       events={events}
       selectable={true}
-      select={(info) => onSlotClick({ startStr: info.startStr, endStr: info.endStr })}
+      select={(info) =>
+        onSlotClick({ startStr: info.startStr, endStr: info.endStr })
+      }
       dateClick={(info) => onDateClick(new Date(info.date))}
-      eventClick={(info) => onEventClick(info.event)}
+      eventClick={(info) => onEventClick(info)}
       height="auto"
-  views={{
-    timeGridWeek: {
-      slotMinHeight: 20, // Ajusta el tamaño de los slots para hacer "zoom out"
-    },
-    timeGridDay: {
-      slotMinHeight: 20, // También para la vista de día
-    }
-  }}
+      views={{
+        timeGridWeek: {
+          slotMinHeight: 20,
+        },
+        timeGridDay: {
+          slotMinHeight: 20,
+        },
+      }}
     />
   );
 };

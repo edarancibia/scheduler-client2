@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { ModalData } from "../types/modalData.type";
 import Calendar from "./Calendar";
-import Modal from "./Modal";
+import Modal from "./modals/Modal";
 import { useNavigate } from "react-router-dom";
+import { EventClickArg } from "@fullcalendar/core";
 import { LogOut } from "lucide-react";
+import EventDetailModal from "./modals/EditEvent.modal";
 
 const CalendarPage = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -13,32 +15,38 @@ const CalendarPage = () => {
     start: string;
     end: string;
   } | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<any | null>(null);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
   const fetchEvents = async () => {
     try {
       const businessId = localStorage.getItem("businessId");
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
 
       if (!businessId) return;
 
-      const response = await fetch(`http://localhost:3000/appointments/${businessId}`, {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
+      const response = await fetch(
+        `http://localhost:3000/appointments/by-business/${businessId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
 
       const data = await response.json();
 
       const transformed = data.map((event: any) => ({
         id: event.id,
-        title: `${event.customer.name} ${event.customer.lastname}`,
+        title: event.service,
         start: event.date,
         end: event.dateEnd,
         status: event.status,
         customer: event.customer,
+        color: event.status.id === 2 ? "#4ade80" : undefined,
       }));
 
       setEvents(transformed);
@@ -52,10 +60,10 @@ const CalendarPage = () => {
     fetchEvents();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("token");
+  //   navigate("/");
+  // };
 
   const handleSlotClick = (selection: { startStr: string; endStr: string }) => {
     setSelectedTime({
@@ -78,13 +86,13 @@ const CalendarPage = () => {
     customerId: number;
   }) => {
     try {
-      const businessId = localStorage.getItem('businessId');
+      const businessId = localStorage.getItem("businessId");
       const customerId = eventData.customerId;
 
       const response = await fetch("http://localhost:3000/appointments", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -115,12 +123,100 @@ const CalendarPage = () => {
     fetchEvents();
   };
 
+  const handleEventClick = async (clickInfo: EventClickArg) => {
+    const eventId = clickInfo.event.id;
+
+    fetchEventById(Number(eventId));
+  };
+
+  const fetchEventById = async (eventId: number) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(
+        `http://localhost:3000/appointments/${eventId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error al obtener el evento");
+      }
+
+      const event = await response.json();
+
+      setSelectedEvent(event);
+      setIsDetailModalOpen(true);
+    } catch (error) {
+      console.error("Error al obtener el evento:", error);
+    }
+  };
+
+  const updateEventStatus = async (eventId: number, statusId: number) => {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(
+      `http://localhost:3000/appointments/${eventId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ statusId }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Error al actualizar el estado del evento");
+    }
+
+    return await response.json();
+  };
+
+  const handleConfirm = async () => {
+    if (!selectedEvent) return;
+
+    try {
+      const updated = await updateEventStatus(selectedEvent.id, 2);
+      setEvents((prev) =>
+        prev.map((event) =>
+          event.id === updated.id ? { ...event, status: updated.status } : event
+        )
+      );
+      setIsDetailModalOpen(false);
+      fetchEvents();
+    } catch (err) {
+      console.error("Error al confirmar evento", err);
+    }
+  };
+
+  const handleCancelEvent = async () => {
+    if (!selectedEvent) return;
+
+    try {
+      const updated = await updateEventStatus(selectedEvent.id, 3);
+      setEvents((prev) =>
+        prev.map((event) =>
+          event.id === updated.id ? { ...event, status: updated.status } : event
+        )
+      );
+      setIsDetailModalOpen(false);
+      fetchEvents();
+    } catch (err) {
+      console.error("Error al cancelar evento", err);
+    }
+  };
+
   return (
     <div className="calendar-page relative mr-10 ml-10">
       <Calendar
         events={events}
         onDateClick={handleDateClick}
-        onEventClick={() => {}}
+        onEventClick={handleEventClick}
         onSlotClick={handleSlotClick}
       />
       {isModalOpen && selectedTime && (
@@ -134,6 +230,14 @@ const CalendarPage = () => {
           }}
           onClose={handleModalClose}
           onSave={handleSave}
+        />
+      )}
+      {isDetailModalOpen && selectedEvent && (
+        <EventDetailModal
+          event={selectedEvent}
+          onClose={() => setIsDetailModalOpen(false)}
+          onConfirm={handleConfirm}
+          onCancelEvent={handleCancelEvent}
         />
       )}
     </div>

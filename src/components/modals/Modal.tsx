@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { ModalProps } from "./interfaces/ModalProps.interface";
-import CreateCustomerModal from "./CreateCustomer.modal";
-import { Customer } from "./interfaces/Customer.interface";
+import { ModalProps } from "../interfaces/ModalProps.interface";
+import CreateCustomerModal from "../CreateCustomer.modal";
+import { Customer } from "../interfaces/Customer.interface";
 
 const Modal: React.FC<ModalProps> = ({ data, onClose, onSave, onDelete }) => {
   const formatDateTime = (date: Date | string | undefined) => {

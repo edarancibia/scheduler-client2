@@ -41,7 +41,6 @@ const Login = () => {
       }
       
       const userData = await userResponse.json();
-      console.log(userData)
   
       localStorage.setItem("user", JSON.stringify(userData));
       localStorage.setItem("businessId", userData.businessId); 
