@@ -44,6 +44,7 @@ const Login = () => {
   
       localStorage.setItem("user", JSON.stringify(userData));
       localStorage.setItem("businessId", userData.businessId); 
+      localStorage.setItem("businessName", userData.businessName); 
       setTimeout(() => navigate("/calendar"), 100); 
 
     } catch (error: any) {
