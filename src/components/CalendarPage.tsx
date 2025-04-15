@@ -20,6 +20,8 @@ const CalendarPage = () => {
 
   const navigate = useNavigate();
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const fetchEvents = async () => {
     try {
       const businessId = localStorage.getItem("businessId");
@@ -28,7 +30,7 @@ const CalendarPage = () => {
       if (!businessId) return;
 
       const response = await fetch(
-        `http://localhost:3000/appointments/by-business/${businessId}`,
+        `${apiUrl}appointments/by-business/${businessId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -60,11 +62,6 @@ const CalendarPage = () => {
     fetchEvents();
   }, []);
 
-  // const handleLogout = () => {
-  //   localStorage.removeItem("token");
-  //   navigate("/");
-  // };
-
   const handleSlotClick = (selection: { startStr: string; endStr: string }) => {
     setSelectedTime({
       start: selection.startStr,
@@ -89,7 +86,7 @@ const CalendarPage = () => {
       const businessId = localStorage.getItem("businessId");
       const customerId = eventData.customerId;
 
-      const response = await fetch("http://localhost:3000/appointments", {
+      const response = await fetch(`${apiUrl}appointments`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -134,7 +131,7 @@ const CalendarPage = () => {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:3000/appointments/${eventId}`,
+        `${apiUrl}appointments/${eventId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -159,7 +156,7 @@ const CalendarPage = () => {
     const token = localStorage.getItem("token");
 
     const response = await fetch(
-      `http://localhost:3000/appointments/${eventId}`,
+      `${apiUrl}appointments/${eventId}`,
       {
         method: "PUT",
         headers: {

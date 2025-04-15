@@ -4,7 +4,7 @@ export default function LandingPage() {
             {/* Navbar */}
             <nav className="bg-white border-b border-gray-200">
                 <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-                    <div className="text-2xl font-bold text-green-700">Agendalo</div>
+                    <div className="text-2xl font-bold text-green-700">ReservaloYa</div>
                     <div className="space-x-4">
                         <a href="/login" className="text-gray-700 hover:text-green-700">Iniciar sesión</a>
                         <a
@@ -33,18 +33,19 @@ export default function LandingPage() {
                 {/* Contenido */}
                 <div className="relative z-10 max-w-2xl px-4">
                     <h1 className="text-4xl font-bold sm:text-5xl">
-                        Organiza tus citas con facilidad
+                        Organiza las citas de tu negocio con facilidad
                     </h1>
                     <p className="mt-4 text-lg sm:text-xl">
-                        Agendalo te ayuda a manejar tus reservas y clientes de forma simple y eficiente.
+                        ResérvaloYa te ayuda a manejar tus reservas y clientes de forma simple y eficiente.
                     </p>
                     <div className="mt-6">
                         <a
                             href="#"
-                            className="inline-block rounded-md bg-white px-6 py-3 text-gray-800 font-semibold hover:bg-gray-100 transition"
+                            className="inline-block rounded-md bg-green-600 px-6 py-3 text-white font-semibold hover:bg-green-500 transition"
                         >
                             Comenzar prueba gratis
                         </a>
+
                     </div>
                 </div>
             </section>

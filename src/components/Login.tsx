@@ -7,12 +7,14 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
+      const response = await fetch(`${apiUrl}auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +30,7 @@ const Login = () => {
 
       localStorage.setItem("token", data.access_token);
 
-      const userResponse = await fetch(`http://localhost:3000/users?email=${email}`, {
+      const userResponse = await fetch(`${apiUrl}users?email=${email}`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${data.access_token}`,
@@ -48,7 +50,8 @@ const Login = () => {
       setTimeout(() => navigate("/calendar"), 100); 
 
     } catch (error: any) {
-      setError(error.message);
+      console.error(error.message)
+      setError('Error al obtener información del usuario');
     }
   };
 

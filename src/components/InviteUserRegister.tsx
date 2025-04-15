@@ -21,12 +21,13 @@ const InviteUserRegister = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [businessName, setBusinessName] = useState('');
-  const [businessId, setBusinessId] = useState('');
+
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchBusinessName = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/business/${1}`);
+        const res = await axios.get(`${apiUrl}business/${1}`);
         setBusinessName(res.data.name);
       } catch (error) {
         setBusinessName("No disponible");
@@ -65,7 +66,7 @@ const InviteUserRegister = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/users", {
+      const response = await fetch(`${apiUrl}users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

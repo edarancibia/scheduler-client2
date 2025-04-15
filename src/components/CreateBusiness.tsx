@@ -9,6 +9,8 @@ const CreateBusiness = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const navigate = useNavigate();
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSuccessMessage("");
@@ -20,7 +22,7 @@ const CreateBusiness = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/business", {
+      const response = await fetch(`${apiUrl}business`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

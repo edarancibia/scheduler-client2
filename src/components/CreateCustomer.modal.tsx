@@ -22,9 +22,11 @@ const CreateCustomerModal: React.FC<CreateCustomerModalProps> = ({
     businessId: Number(localStorage.getItem('businessId')),
   });
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleSaveCustomer = async () => {
     try {
-      const response = await fetch("http://localhost:3000/customers", {
+      const response = await fetch(`${apiUrl}customers`, {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${localStorage.getItem('token')}`,

@@ -20,6 +20,8 @@ const UserRegister = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -49,7 +51,7 @@ const UserRegister = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/users", {
+      const response = await fetch(`${apiUrl}users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

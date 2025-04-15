@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { ModalProps } from "../interfaces/ModalProps.interface";
+import { ModalProps } from "../../interfaces/ModalProps.interface";
 import CreateCustomerModal from "../CreateCustomer.modal";
-import { Customer } from "../interfaces/Customer.interface";
+import { Customer } from "../../interfaces/Customer.interface";
 
 const Modal: React.FC<ModalProps> = ({ data, onClose, onSave, onDelete }) => {
   const formatDateTime = (date: Date | string | undefined) => {
@@ -14,6 +14,8 @@ const Modal: React.FC<ModalProps> = ({ data, onClose, onSave, onDelete }) => {
     const minutes = String(d.getMinutes()).padStart(2, "0");
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
+
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const isDateRange = (
     date: unknown
@@ -71,7 +73,7 @@ const Modal: React.FC<ModalProps> = ({ data, onClose, onSave, onDelete }) => {
       if (!businessId || !token) return;
 
       const response = await fetch(
-        `http://localhost:3000/customers/search?businessId=${businessId}&q=${term}`,
+        `${apiUrl}customers/search?businessId=${businessId}&q=${term}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
