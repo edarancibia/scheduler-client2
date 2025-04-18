@@ -10,7 +10,7 @@ const NavbarSimple = () => {
                 alt="Logo"
               />
               <span className="text-white font-semibold text-lg ml-2">
-                Mi App
+                Agendados
               </span>
             </div>
           </div>

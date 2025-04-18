@@ -4,7 +4,7 @@ export default function LandingPage() {
             {/* Navbar */}
             <nav className="bg-white border-b border-gray-200">
                 <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-                    <div className="text-2xl font-bold text-green-700">ReservaloYa</div>
+                    <div className="text-2xl font-bold text-green-700">Agendados</div>
                     <div className="space-x-4">
                         <a href="/login" className="text-gray-700 hover:text-green-700">Iniciar sesión</a>
                         <a
@@ -53,8 +53,8 @@ export default function LandingPage() {
             <section className="py-16 bg-white">
                 <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8">
                     <div className="text-center">
-                        <h3 className="text-xl font-semibold mb-2 text-green-700">Reservas en línea</h3>
-                        <p className="text-gray-600">Tus clientes pueden agendar citas desde su celular fácilmente.</p>
+                        <h3 className="text-xl font-semibold mb-2 text-green-700">Fidelización de clientes</h3>
+                        <p className="text-gray-600">Administra tus clientes y envía campañas publicitarias.</p>
                     </div>
                     <div className="text-center">
                         <h3 className="text-xl font-semibold mb-2 text-green-700">Agenda organizada</h3>
