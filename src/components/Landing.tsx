@@ -36,7 +36,7 @@ export default function LandingPage() {
                         Organiza las citas de tu negocio con facilidad
                     </h1>
                     <p className="mt-4 text-lg sm:text-xl">
-                        ResérvaloYa te ayuda a manejar tus reservas y clientes de forma simple y eficiente.
+                        Agendado te ayuda a manejar tus reservas y clientes de forma simple y eficiente.
                     </p>
                     <div className="mt-6">
                         <a
