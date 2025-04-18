@@ -8,7 +8,7 @@ import EventDetailModal from "./modals/EditEvent.modal";
 
 const CalendarPage = () => {
   const [events, setEvents] = useState<Event[]>([]);
-  const [modalData, setModalData] = useState<ModalData | null>(null);
+  const [setModalData] = useState<ModalData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTime, setSelectedTime] = useState<{
     start: string;
