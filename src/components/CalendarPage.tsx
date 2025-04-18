@@ -4,7 +4,6 @@ import Calendar from "./Calendar";
 import Modal from "./modals/Modal";
 import { useNavigate } from "react-router-dom";
 import { EventClickArg } from "@fullcalendar/core";
-import { LogOut } from "lucide-react";
 import EventDetailModal from "./modals/EditEvent.modal";
 
 const CalendarPage = () => {
@@ -180,7 +179,7 @@ const CalendarPage = () => {
     try {
       const updated = await updateEventStatus(selectedEvent.id, 2);
       setEvents((prev) =>
-        prev.map((event) =>
+        prev.map((event: any) =>
           event.id === updated.id ? { ...event, status: updated.status } : event
         )
       );
@@ -197,7 +196,7 @@ const CalendarPage = () => {
     try {
       const updated = await updateEventStatus(selectedEvent.id, 3);
       setEvents((prev) =>
-        prev.map((event) =>
+        prev.map((event: any) =>
           event.id === updated.id ? { ...event, status: updated.status } : event
         )
       );
