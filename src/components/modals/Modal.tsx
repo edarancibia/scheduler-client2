@@ -29,7 +29,7 @@ const Modal: React.FC<ModalProps> = ({ data, onClose, onSave, onDelete }) => {
   };
 
   const defaultEndDate = formatDateTime(
-    data.type === "create" && isDateRange(data.date)
+    isDateRange(data.date)
       ? data.date.end
       : data.event?.end
   );
@@ -158,7 +158,7 @@ const Modal: React.FC<ModalProps> = ({ data, onClose, onSave, onDelete }) => {
       <div className="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg w-96 max-w-sm mx-4">
         <form onSubmit={handleSubmit}>
           <h2 className="text-xl font-semibold text-gray-800 mb-6 text-center">
-            {data.type === "create" ? "Agendar cita" : "Editar cita"}
+             "Agendar cita"
           </h2>
           <div className="mb-4 relative">
             <label className="block text-gray-600 font-medium mb-2">
@@ -250,13 +250,11 @@ const Modal: React.FC<ModalProps> = ({ data, onClose, onSave, onDelete }) => {
             type="submit"
             className="w-full py-3 mb-4 text-white bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            {data.type === "create" ? "Guardar" : "Actualizar"}
+            "Guardar"
           </button>
-          {data.type === "edit" && onDelete && (
             <button type="button" onClick={() => onDelete?.(data.event!.id)}>
               Eliminar
             </button>
-          )}
           <button
             type="button"
             onClick={onClose}

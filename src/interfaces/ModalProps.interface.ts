@@ -1,7 +1,6 @@
 
 export interface ModalProps {
   data: {
-    type: 'create' | 'edit';
     date: { start: string; end: string } | string;
     event?: {
       id: number;

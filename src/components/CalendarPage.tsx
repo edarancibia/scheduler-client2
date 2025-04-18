@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { ModalData } from "../types/modalData.type";
 import Calendar from "./Calendar";
 import Modal from "./modals/Modal";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +7,6 @@ import EventDetailModal from "./modals/EditEvent.modal";
 
 const CalendarPage = () => {
   const [events, setEvents] = useState<Event[]>([]);
-  const [setModalData] = useState<ModalData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTime, setSelectedTime] = useState<{
     start: string;
@@ -69,8 +67,7 @@ const CalendarPage = () => {
     setIsModalOpen(true);
   };
 
-  const handleDateClick = (date: Date) => {
-    setModalData({ date, type: "create" });
+  const handleDateClick = () => {
     setIsModalOpen(true);
   };
 
@@ -106,7 +103,6 @@ const CalendarPage = () => {
       }
 
       setIsModalOpen(false);
-      setModalData(null);
       fetchEvents();
     } catch (error) {
       console.error("Error al guardar el evento:", error);
@@ -115,7 +111,6 @@ const CalendarPage = () => {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
-    setModalData(null);
     fetchEvents();
   };
 
@@ -218,7 +213,6 @@ const CalendarPage = () => {
       {isModalOpen && selectedTime && (
         <Modal
           data={{
-            type: "create",
             date: {
               start: selectedTime.start,
               end: selectedTime.end,
