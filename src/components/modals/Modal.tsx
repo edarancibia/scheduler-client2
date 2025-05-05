@@ -3,7 +3,7 @@ import { ModalProps } from "../../interfaces/ModalProps.interface";
 import CreateCustomerModal from "../CreateCustomer.modal";
 import { Customer } from "../../interfaces/Customer.interface";
 
-const Modal: React.FC<ModalProps> = ({ data, onClose, onSave, onDelete }) => {
+const Modal: React.FC<ModalProps> = ({ data, onClose, onSave }) => {
   const formatDateTime = (date: Date | string | undefined) => {
     if (!date) return "";
     const d = new Date(date);
@@ -158,7 +158,7 @@ const Modal: React.FC<ModalProps> = ({ data, onClose, onSave, onDelete }) => {
       <div className="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg w-96 max-w-sm mx-4">
         <form onSubmit={handleSubmit}>
           <h2 className="text-xl font-semibold text-gray-800 mb-6 text-center">
-             "Agendar cita"
+             Agendar cita
           </h2>
           <div className="mb-4 relative">
             <label className="block text-gray-600 font-medium mb-2">
@@ -248,17 +248,14 @@ const Modal: React.FC<ModalProps> = ({ data, onClose, onSave, onDelete }) => {
 
           <button
             type="submit"
-            className="w-full py-3 mb-4 text-white bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="mt-4 w-full rounded-md bg-gray-800 px-4 py-3 text-white hover:bg-gray-700 transition mb-2"
           >
-            "Guardar"
+            Guardar
           </button>
-            <button type="button" onClick={() => onDelete?.(data.event!.id)}>
-              Eliminar
-            </button>
           <button
             type="button"
             onClick={onClose}
-            className="w-full py-3 text-gray-600 bg-gray-300 hover:bg-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
+            className="w-full py-2 text-gray-600 bg-gray-300 hover:bg-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
           >
             Cancelar
           </button>

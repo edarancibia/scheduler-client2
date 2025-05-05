@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { UserCircle } from "lucide-react";
 
@@ -92,35 +92,35 @@ const Navbar: React.FC = () => {
               />
               <span className="text-base font-medium text-white">{businessName}</span>
             </div>
-            {/* <div className="hidden sm:ml-6 sm:block">
+            <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                <a
-                  href="#"
+                <Link
+                  to="calendar"
                   className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
                   aria-current="page"
                 >
-                  Dashboard
-                </a>
-                <a
-                  href="#"
+                  Calendario
+                </Link>
+                <Link
+                  to="/campaigns"
                   className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
-                  Team
-                </a>
-                <a
-                  href="#"
+                  Campañas
+                </Link>
+                <Link
+                  to="/price"
                   className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
-                  Projects
-                </a>
-                <a
+                  Precios
+                </Link>
+                {/*<a
                   href="#"
                   className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
                   Calendar
-                </a>
+                </a> */}
               </div>
-            </div> */}
+            </div>
           </div>
 
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -187,38 +187,29 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Menú móvil */}
-      <div
-        className={`sm:hidden ${isMenuOpen ? "block" : "hidden"}`}
-        id="mobile-menu"
-      >
+      <div className={`sm:hidden ${isMenuOpen ? "block" : "hidden"}`} id="mobile-menu">
         <div className="space-y-1 px-2 pt-2 pb-3">
-          <a
-            href="#"
+          <Link
+            to="/calendar"
             className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
-            aria-current="page"
           >
-            Dashboard
-          </a>
-          <a
-            href="#"
+            Calendario
+          </Link>
+          <Link
+            to="/campaigns"
             className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
           >
-            Team
-          </a>
-          <a
-            href="#"
+            Campañas
+          </Link>
+          <Link
+            to="/price"
             className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
           >
-            Projects
-          </a>
-          <a
-            href="#"
-            className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-          >
-            Calendar
-          </a>
+            Precios
+          </Link>
         </div>
       </div>
+
     </nav>
   );
 };

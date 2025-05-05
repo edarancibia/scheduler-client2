@@ -1,21 +1,62 @@
+import { useState } from "react";
+
 export default function LandingPage() {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleMenu = () => setIsOpen(!isOpen);
+
     return (
         <div>
             {/* Navbar */}
             <nav className="bg-white border-b border-gray-200">
                 <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
                     <div className="text-2xl font-bold text-green-700">Agendados</div>
-                    <div className="space-x-4">
+                    <div className="hidden md:flex space-x-4">
                         <a href="/login" className="text-gray-700 hover:text-green-700">Iniciar sesión</a>
                         <a
                             href="/register"
+                            target="_blank"
                             className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
                         >
                             Prueba gratis
                         </a>
                     </div>
+
+                    {/* Hamburger icon for mobile */}
+                    <div className="md:hidden">
+                        <button onClick={toggleMenu} className="text-gray-700 hover:text-green-700">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                className="h-6 w-6"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </nav>
+
+            {/* Mobile Menu */}
+            {isOpen && (
+                <div className="md:hidden flex flex-col items-center space-y-4 py-4 bg-white border-t border-gray-200">
+                    <a href="/login" className="text-gray-700 hover:text-green-700">Iniciar sesión</a>
+                    <a
+                        href="/register"
+                        target="_blank"
+                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+                    >
+                        Prueba gratis
+                    </a>
+                </div>
+            )}
 
             {/* Hero */}
             <section
@@ -40,15 +81,16 @@ export default function LandingPage() {
                     </p>
                     <div className="mt-6">
                         <a
-                            href="#"
+                            href="/register"
+                            target="_blank"
                             className="inline-block rounded-md bg-green-600 px-6 py-3 text-white font-semibold hover:bg-green-500 transition"
                         >
                             Comenzar prueba gratis
                         </a>
-
                     </div>
                 </div>
             </section>
+
             {/* Features */}
             <section className="py-16 bg-white">
                 <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8">
@@ -69,7 +111,7 @@ export default function LandingPage() {
 
             {/* Footer */}
             <footer className="bg-gray-100 py-6 text-center text-gray-500">
-                © {new Date().getFullYear()} Agendalo - Todos los derechos reservados.
+                © {new Date().getFullYear()} Agendados - Todos los derechos reservados.
             </footer>
         </div>
     );

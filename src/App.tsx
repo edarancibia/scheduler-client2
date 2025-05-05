@@ -1,6 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import CalendarPage from './components/CalendarPage';
-import Login from "./components/Login";
+import Login from "./components/auth/Login";
 import UserRegister from "./components/UserRegister";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateBusiness from "./components/CreateBusiness";
@@ -8,6 +8,10 @@ import InviteUserRegister from "./components/InviteUserRegister";
 import PublicNavbar from "./components/nav/PublicNavbar";
 import Navbar from "./components/nav/Navbar";
 import LandingPage from "./components/Landing";
+import Campaigns from "./components/Campaigns";
+import Prices from "./components/Price";
+import ForgotPassword from "./components/auth/ForgotPass";
+import ResetPassword from "./components/auth/ResetPassword";
 
 const App = () => {
   const location = useLocation();
@@ -17,7 +21,8 @@ const App = () => {
     location.pathname === "/register" ||
     location.pathname === "/invite-register" ||
     location.pathname === "/business" ||
-    location.pathname === "/forgot-password";
+    location.pathname === "/forgot-password" ||
+    location.pathname === "/reset-password";
 
     const shouldShowNavbar = location.pathname !== "/";
 
@@ -32,6 +37,10 @@ const App = () => {
         <Route path="/invite-register" element={<InviteUserRegister />} />
         <Route path="/calendar" element={<PrivateRoute Component={CalendarPage} />} />
         <Route path="/business" element={<CreateBusiness />} />
+        <Route path="/campaigns" element={<Campaigns />} />
+        <Route path="/price" element={<Prices />}/>
+        <Route path="/forgot-password" element={<ForgotPassword />}/>
+        <Route path="/reset-password" element={<ResetPassword />}/>
       </Routes>
     </div>
   );

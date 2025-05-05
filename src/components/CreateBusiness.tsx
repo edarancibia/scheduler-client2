@@ -39,7 +39,7 @@ const CreateBusiness = () => {
       setShowSuccess(true);
       setTimeout(() => {
         setShowSuccess(false);
-        navigate("/");
+        navigate("/login");
       }, 3000);
 
       setName("");
