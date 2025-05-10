@@ -31,7 +31,7 @@ const Login = () => {
 
       localStorage.setItem("token", data.access_token);
 
-      const userResponse = await fetch(`${apiUrl}users?email=${email}`, {
+      const userResponse = await fetch(`${apiUrl}/users?email=${email}`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${data.access_token}`,
