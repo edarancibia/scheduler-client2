@@ -27,7 +27,7 @@ const CalendarPage = () => {
       if (!businessId) return;
 
       const response = await fetch(
-        `${apiUrl}appointments/by-business/${businessId}`,
+        `${apiUrl}/appointments/by-business/${businessId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -82,7 +82,7 @@ const CalendarPage = () => {
       const businessId = localStorage.getItem("businessId");
       const customerId = eventData.customerId;
 
-      const response = await fetch(`${apiUrl}appointments`, {
+      const response = await fetch(`${apiUrl}/appointments`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -125,7 +125,7 @@ const CalendarPage = () => {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `${apiUrl}appointments/${eventId}`,
+        `${apiUrl}/appointments/${eventId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -150,7 +150,7 @@ const CalendarPage = () => {
     const token = localStorage.getItem("token");
 
     const response = await fetch(
-      `${apiUrl}appointments/${eventId}`,
+      `${apiUrl}/appointments/${eventId}`,
       {
         method: "PUT",
         headers: {

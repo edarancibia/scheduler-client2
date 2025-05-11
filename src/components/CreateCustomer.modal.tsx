@@ -26,7 +26,7 @@ const CreateCustomerModal: React.FC<CreateCustomerModalProps> = ({
 
   const handleSaveCustomer = async () => {
     try {
-      const response = await fetch(`${apiUrl}customers`, {
+      const response = await fetch(`${apiUrl}/customers`, {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${localStorage.getItem('token')}`,

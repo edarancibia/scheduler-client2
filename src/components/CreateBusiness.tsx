@@ -22,7 +22,7 @@ const CreateBusiness = () => {
     }
 
     try {
-      const response = await fetch(`${apiUrl}business`, {
+      const response = await fetch(`${apiUrl}/business`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

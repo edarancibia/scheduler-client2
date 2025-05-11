@@ -27,7 +27,7 @@ const InviteUserRegister = () => {
   useEffect(() => {
     const fetchBusinessName = async () => {
       try {
-        const res = await axios.get(`${apiUrl}business/${1}`);
+        const res = await axios.get(`${apiUrl}/business/${1}`);
         setBusinessName(res.data.name);
       } catch (error) {
         setBusinessName("No disponible");
@@ -66,7 +66,7 @@ const InviteUserRegister = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${apiUrl}users`, {
+      const response = await fetch(`${apiUrl}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

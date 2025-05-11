@@ -73,7 +73,7 @@ const Modal: React.FC<ModalProps> = ({ data, onClose, onSave }) => {
       if (!businessId || !token) return;
 
       const response = await fetch(
-        `${apiUrl}customers/search?businessId=${businessId}&q=${term}`,
+        `${apiUrl}/customers/search?businessId=${businessId}&q=${term}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

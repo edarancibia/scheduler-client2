@@ -51,7 +51,7 @@ const UserRegister = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${apiUrl}users`, {
+      const response = await fetch(`${apiUrl}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

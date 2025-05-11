@@ -78,7 +78,7 @@ export default function Campaigns() {
         formData.append('minute', minute);
 
         try {
-            await axios.post(`${apiUrl}campaigns/create`, formData, {
+            await axios.post(`${apiUrl}/campaigns/create`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
