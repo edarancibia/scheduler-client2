@@ -16,7 +16,6 @@
     padding: 0 0.5rem;
   }
   
-  /* Mejorar estilo de los botones */
   .fc .fc-button {
     border: none;
     padding: 0.4rem 0.8rem;
@@ -27,10 +26,12 @@
   }
   
   .fc .fc-button:hover {
-    background-color: #5a812b;
+    background-color: #374151 !important;
+    color: #ffffff !important;    
+    border-color: #374151 !important;
   }
   
-  /* Responsive: colapsar en columna en pantallas pequeñas */
+  
   @media (max-width: 640px) {
     .fc-header-toolbar {
       flex-direction: column;

@@ -60,14 +60,27 @@ const CalendarPage = () => {
   }, []);
 
   const handleSlotClick = (selection: { startStr: string; endStr: string }) => {
+    const start = new Date(selection.startStr);
+    const end = new Date(start.getTime() + 30 * 60 * 1000); 
+
     setSelectedTime({
       start: selection.startStr,
-      end: selection.endStr,
+      end: end.toISOString(),
     });
     setIsModalOpen(true);
   };
 
-  const handleDateClick = () => {
+  const handleDateClick = (date: Date) => {
+    const isoDate = date.toISOString();
+
+    const start = date;
+    const end = new Date(start.getTime() + 30 * 60 * 1000);
+  
+    setSelectedTime({
+      start: isoDate,
+      end: end.toISOString(),
+    });
+  
     setIsModalOpen(true);
   };
 

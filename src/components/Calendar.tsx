@@ -4,7 +4,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import esLocale from "@fullcalendar/core/locales/es";
 import { CalendarProps } from "../types/CalendarProps.type";
-import React from "react";
+import React, { useRef } from "react";
 
 const Calendar: React.FC<CalendarProps> = ({
   events,
@@ -12,8 +12,11 @@ const Calendar: React.FC<CalendarProps> = ({
   onEventClick,
   onSlotClick,
 }) => {
+  const calendarRef = useRef<any>(null);
+  
   return (
     <FullCalendar
+      ref={calendarRef}
       plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
       initialView="timeGridWeek"
       locale={esLocale}
@@ -47,7 +50,9 @@ const Calendar: React.FC<CalendarProps> = ({
       select={(info) =>
         onSlotClick({ startStr: info.startStr, endStr: info.endStr })
       }
-      dateClick={(info) => onDateClick(new Date(info.date))}
+      dateClick={(info) => {
+        onDateClick(new Date(info.date));
+      }}      
       eventClick={(info) => onEventClick(info)}
       height="auto"
       views={{
