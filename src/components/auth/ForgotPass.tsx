@@ -12,7 +12,7 @@ export default function ForgotPassword() {
     setError('');
 
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}auth/forgot-password`, { email });
+      await axios.post(`${import.meta.env.VITE_API_URL}/auth/forgot-password`, { email });
       setSent(true);
     } catch (err: any) {
       if (err.response?.data?.message === 'Usuario no encontrado') {
