@@ -38,15 +38,20 @@ const CalendarPage = () => {
 
       const data = await response.json();
 
-      const transformed = data.map((event: any) => ({
-        id: event.id,
-        title: event.service,
-        start: event.date,
-        end: event.dateEnd,
-        status: event.status,
-        customer: event.customer,
-        color: event.status.id === 2 ? "#4ade80" : undefined,
-      }));
+      const transformed = data.map((event: any) => {
+        const localStart = new Date(event.date);
+        const localEnd = new Date(event.dateEnd);
+      
+        return {
+          id: event.id,
+          title: event.service,
+          start: localStart.toISOString().slice(0, 19),
+          end: localEnd.toISOString().slice(0, 19),
+          status: event.status,
+          customer: event.customer,
+          color: event.status.id === 2 ? "#4ade80" : undefined,
+        };
+      });
 
       setEvents(transformed);
     } catch (error) {
