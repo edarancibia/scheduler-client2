@@ -16,6 +16,7 @@ const Calendar: React.FC<CalendarProps> = ({
   
   return (
     <FullCalendar
+      timeZone="local"
       ref={calendarRef}
       plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
       initialView="timeGridWeek"
