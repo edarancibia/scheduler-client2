@@ -39,14 +39,24 @@ const CalendarPage = () => {
       const data = await response.json();
 
       const transformed = data.map((event: any) => {
-        const localStart = new Date(event.date);
-        const localEnd = new Date(event.dateEnd);
+        const utcStart = new Date(event.date);
+        const utcEnd = new Date(event.dateEnd);
+      
+        const toLocalString = (d: Date) => {
+          const year = d.getFullYear();
+          const month = String(d.getMonth() + 1).padStart(2, "0");
+          const day = String(d.getDate()).padStart(2, "0");
+          const hours = String(d.getHours()).padStart(2, "0");
+          const minutes = String(d.getMinutes()).padStart(2, "0");
+          const seconds = "00";
+          return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+        };
       
         return {
           id: event.id,
           title: event.service,
-          start: localStart.toISOString().slice(0, 19),
-          end: localEnd.toISOString().slice(0, 19),
+          start: toLocalString(utcStart),
+          end: toLocalString(utcEnd),
           status: event.status,
           customer: event.customer,
           color: event.status.id === 2 ? "#4ade80" : undefined,
